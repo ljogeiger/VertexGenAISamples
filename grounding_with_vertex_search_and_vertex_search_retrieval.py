@@ -99,7 +99,7 @@ def search_sample(
     request = discoveryengine.SearchRequest(
         serving_config=serving_config,
         query=search_query,
-        page_size=20, # adjust this to get more results
+        page_size=10, # adjust this to get more results
         content_search_spec=content_search_spec,
         query_expansion_spec=discoveryengine.SearchRequest.QueryExpansionSpec(
             condition=discoveryengine.SearchRequest.QueryExpansionSpec.Condition.AUTO,
@@ -107,6 +107,7 @@ def search_sample(
         spell_correction_spec=discoveryengine.SearchRequest.SpellCorrectionSpec(
             mode=discoveryengine.SearchRequest.SpellCorrectionSpec.Mode.AUTO
         ),
+        filter="lr:\"lang_en\"" #lang_zh-CN
     )
 
 
@@ -115,7 +116,7 @@ def search_sample(
     return response
 
 
-query = "Donald Trump"
+query = "WOO Ying-ming" #廉政專員 - WOO Ying-ming
 
 response = search_sample(PROJECT_ID, LOCATION, "pwc-basic_1712090697116", query)
 
