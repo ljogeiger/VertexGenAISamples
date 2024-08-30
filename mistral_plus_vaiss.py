@@ -43,7 +43,7 @@ aip_endpoint_name = (
 )
 endpoint = aiplatform.Endpoint(aip_endpoint_name)
 
-max_tokens = 400
+max_tokens = 500
 temperature = 1.0
 top_p = 1.0
 top_k = 1
@@ -54,9 +54,18 @@ raw_response = False
 def get_answer_from_content(user_input, content):
 
   prompt = f"""
-  You are a friendly and helpful production level Southwire agent.
+  You're a helpful production-level AI assistant. Given a user question and some Southwire manuals snippets, answer the user question and provide citations. If none of the articles answer the question, just say you don't know.
 
-  Your job is to answer questions the user asks you using content provided to you. If you cannot answer the question with the content provided say 'I can't answer this question'.
+  Remember, you must return both an answer and citations. A citation consists of a VERBATIM quote that justifies the answer and the ID of the quote article. Return a citation for every quote across all articles that justify the answer. Use the following format for your final output:
+
+  <cited_answer>
+      <answer></answer>
+      <citations>
+          <citation><source_id></source_id><quote></quote></citation>
+          <citation><source_id></source_id><quote></quote></citation>
+          ...
+      </citations>
+  </cited_answer>
 
   <user-question>
   {user_input}
