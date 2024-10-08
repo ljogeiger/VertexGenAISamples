@@ -11,17 +11,15 @@ def generate():
     tools=tools,
     system_instruction=[textsi_1]
   )
-  responses = model.generate_content(
+  response = model.generate_content(
       [text1],
       generation_config=generation_config,
       safety_settings=safety_settings,
-      stream=True,
+      stream=False,
   )
+  print(response, end="")
 
-  for response in responses:
-    if not response.candidates[0].content.parts:
-      continue
-    print(response.text, end="")
+
 
 text1 = """Find allegations with the following company:
 <input-name>
