@@ -1,0 +1,290 @@
+prompt,response,reference,comprehensive_report_correctness/explanation,comprehensive_report_correctness/score,rouge/score,bleu/score,exact_match/score
+"Instructions: 
+Your job is to provide a comprehensive and professional report of negative news articles for a given input_entity. Input_entity can be a person, company, or ship.
+Search thoroughly across all time.
+Provide a date news article you cite.
+
+If there are no negative news articles associates with the input_entity say ""There are no results found for <input_entity>"".
+
+Follow these steps:
+1. If input_entity is a company map it to the legal business name.
+2. Summarize and interpret Google Search results for a given input_entity and all activities provided. If there are no results for a given activity just skip it.
+3. Come up with headline for the event and group results under the headline.
+
+<activities>
+Money Laundering
+Forgery
+Bribery and Corruption
+Human Trafficking
+War Crimes
+Human Rights Violation
+Piracy / Counterfeiting
+Tax Evasion / Tax Fraud
+Antitrust Violations
+Arms Trafficking
+Environmental Crimes
+Pharmaceutical Product Trafficking
+Extortion
+Fraud
+Drug / Narcotics Trafficking
+Organized Crime / Racketeering
+Illicit Trafficking in Stolen and Other Goods
+Falsifying Information on Official Documents
+Robbery / Theft
+Currency Counterfeiting
+Embezzlement
+Terrorism / Terror Financing
+Cybercrime / Hacking / Phishing
+Sanction Violations
+Civil Lawsuit
+Securities Fraud / Insider Trading
+Hostage Taking / Kidnapping
+</activities>
+
+
+Prompt: 
+Find allegations with the following entity:
+<input_entity>
+Seimens
+</input_entity>
+","**Siemens Bribery and Corruption Allegations**
+
+Siemens faced allegations of widespread bribery and corruption, spanning several decades and numerous countries.  Between 2001 and 2007, the company allegedly made approximately 4,283 illegal payments to government officials, totaling roughly $1.4 billion USD.  These payments, allegedly made in various divisions, were linked to projects in countries including Nigeria, Italy, Greece, Venezuela, China, Israel, Bangladesh, and Argentina.  For example, alleged payments involved telecommunications projects in Nigeria, power plant projects in Italy, and metro construction projects in Venezuela and China.  Additionally, payments were allegedly made to officials in Israel's Electric Corporation to secure turbine supply contracts.
+
+The alleged bribery practices continued despite Germany's ratification of the OECD Convention prohibiting transnational bribery in 1999 and Siemens's subsequent listing on the New York Stock Exchange in 2001, subjecting it to the Foreign Corrupt Practices Act (FCPA).  Siemens allegedly failed to implement adequate internal controls to prevent improper payments and even encouraged and rewarded them.
+
+Investigations into Siemens' activities were conducted by public prosecutors and government authorities worldwide, including the U.S. Department of Justice (DOJ) and the Securities and Exchange Commission (SEC).  In 2008, Siemens pleaded guilty in a U.S. federal court to charges of failing to maintain adequate internal controls and violating the FCPA's books and records provisions.  As part of plea agreements, Siemens paid $450 million in criminal fines, $350 million in disgorgement of wrongful profits to the SEC, and an additional $800 million fine to the Munich Public Prosecutor's Office.  In a related case in Israel, six former Israel Electric Corporation officials were indicted for fraud, money laundering, and breach of trust, with allegations that they received $16 million in bribes from Siemens.  Siemens also agreed to pay a penalty of NIS 160 million ($42.7 million) and appoint an external inspector to oversee its Israeli operations.  A monitor was appointed to oversee Siemens' compliance, identifying third-party resellers as a significant bribery risk.
+","**Headline:** Siemens Faces Allegations of Bribery, Fraud, and Violations of the Foreign Corrupt Practices Act (FCPA)
+
+**Bribery and Corruption:**
+
+*   Between March 2001 and December 2007, Siemens allegedly made approximately 4,283 illegal payments to government officials, totaling roughly $1.4 billion USD.  These payments allegedly resulted in approximately $1.1 billion USD in profits for the company.  The payments were allegedly made in connection with various projects across multiple countries, including Nigeria (telecommunications), Italy (power plants), Greece (communications), Venezuela (metro projects), China (metro and transmission lines), Israel (power plants), Bangladesh (mobile services), and Argentina.  While not illegal under German law at the time (and even tax-deductible), the payments violated the OECD Convention (ratified by Germany in 1999) and the FCPA (after Siemens listed on the New York Stock Exchange in 2001).  Siemens allegedly failed to implement necessary internal controls to prevent these payments and may have even encouraged and rewarded them.
+*   In Greece, a bribery scandal emerged concerning deals with government officials related to security systems and purchases by OTE during the 1990s and the 2004 Olympics.  Allegations included bribes potentially reaching €100 million to secure state contracts.  Charges of money laundering and bribery were filed in July 2008, and one former Siemens executive fled to Germany to avoid arrest in 2009.  A former transport minister admitted to receiving payments from Siemens in a Swiss bank account.
+*   In Iraq, Siemens and its subsidiaries allegedly made millions of dollars in improper payments related to the United Nations Oil for Food Program.
+*   A 2024 settlement addressed allegations that Siemens used inaccurate data in an energy performance contract analysis for the Hamtramck Housing Commission, resulting in the U.S. paying a larger subsidy than it should have.
+
+**Fraud:**
+
+*   The inaccurate data used in the Hamtramck Housing Commission energy performance contract analysis constituted an allegation of fraud.  The settlement resolved allegations that Siemens relied on inaccurate data, leading to an inflated U.S. subsidy payment.
+
+**Money Laundering:**
+
+*   The Greek bribery scandal included charges of money laundering.  The alleged illegal payments to government officials between 2001 and 2007 were also subject to investigations for money laundering.
+
+**Tax Evasion:**
+
+*   Investigations into Siemens included allegations of tax evasion.
+
+**Other Allegations:**
+
+*   Investigations involved allegations of public corruption, criminal breaches of fiduciary duty (including embezzlement), and violations of the FCPA.  Siemens pleaded guilty in a U.S. federal court to charges of failing to maintain adequate internal controls and failing to comply with the FCPA's books and records provisions.  The company cooperated with investigations.
+
+
+**Note:** This report is current as of December 5th, 2024.  Information may change over time.
+","STEP 1: The AI-generated response contains the following categories: 'Bribery and Corruption'.
+The reference contains the following categories: 'Bribery and Corruption', 'Fraud', 'Money Laundering', 'Tax Evasion'.
+The response does not contain all categories from the reference, therefore it does not satisfy the reference claim alignment criteria.
+
+STEP 2: According to the rubric, the response should be scored as 0 because it does not contain all categories from the reference.",0.0,0.5032938,0.19885018,0.0
+"Instructions: 
+Your job is to provide a comprehensive and professional report of negative news articles for a given input_entity. Input_entity can be a person, company, or ship.
+Search thoroughly across all time.
+Provide a date news article you cite.
+
+If there are no negative news articles associates with the input_entity say ""There are no results found for <input_entity>"".
+
+Follow these steps:
+1. If input_entity is a company map it to the legal business name.
+2. Summarize and interpret Google Search results for a given input_entity and all activities provided. If there are no results for a given activity just skip it.
+3. Come up with headline for the event and group results under the headline.
+
+<activities>
+Money Laundering
+Forgery
+Bribery and Corruption
+Human Trafficking
+War Crimes
+Human Rights Violation
+Piracy / Counterfeiting
+Tax Evasion / Tax Fraud
+Antitrust Violations
+Arms Trafficking
+Environmental Crimes
+Pharmaceutical Product Trafficking
+Extortion
+Fraud
+Drug / Narcotics Trafficking
+Organized Crime / Racketeering
+Illicit Trafficking in Stolen and Other Goods
+Falsifying Information on Official Documents
+Robbery / Theft
+Currency Counterfeiting
+Embezzlement
+Terrorism / Terror Financing
+Cybercrime / Hacking / Phishing
+Sanction Violations
+Civil Lawsuit
+Securities Fraud / Insider Trading
+Hostage Taking / Kidnapping
+</activities>
+
+
+Prompt: 
+Find allegations with the following entity:
+<input_entity>
+Lukas Geiger
+</input_entity>
+","**Allegations of Misconduct and Team Controversies Related to 0L Network Hard Fork**
+
+* **Date:** May 8, 2024
+* **Summary:**  A crypto trader lost $1 million due to a hard fork in the 0L network, alleging that the team failed to take responsibility for a smart contract loophole.  Insiders allegedly exploited the loophole to prematurely unlock tokens.  The team reportedly forked out wallets suspected of exploitation, impacting some innocent users.  One allegation is that the pseudonymous lead designer, ""0D,"" may be Lucas Geiger, founder of the OpenLibra project.
+
+**Allegations of FLSA Violations**
+
+* **Date:**  Source does not specify a date.
+* **Summary:**  Lucas Geiger is named as a defendant in a representative action alleging violations of the Fair Labor Standards Act (FLSA).  The plaintiffs are pursuing a collective action under 29 U.S.C. § 216(b).
+
+**Allegations of OpenLibra ICO Exit Scam**
+
+* **Date:** October 10, 2019
+* **Summary:**  A Reddit post raised concerns about OpenLibra, suggesting it may have been an exit scam.  The post questioned whether speakers were paid large sums to appear at events, with the organizers profiting significantly.
+
+**Allegation of Involvement in a Tax Scandal**
+
+* **Date:** 2021
+* **Summary:**  A tax scandal is cited, where victims had to repay large sums, leading to financial hardship, bankruptcies, mental health issues, and family breakdown.  The scandal is described as an example of algorithmic bias, where the system used nationality as a predictive feature, and tax officials' actions reinforced the bias.  While the source mentions Geiger (2021), it's unclear if this refers to Lucas Geiger, as the citation points to a different publication about algorithmic bias in bureaucratic organizations.
+
+
+","
+There are no results found for Lukas Geiger.
+","STEP 1: The reference states ""There are no results found for Lukas Geiger.""
+The response starts with a headline ""Allegations of Misconduct and Team Controversies Related to 0L Network Hard Fork"", which mentions ""One allegation is that the pseudonymous lead designer, '0D,' may be Lucas Geiger, founder of the OpenLibra project.""
+This constitutes generating non-existent negative news.
+STEP 2: Since the generated response does not align with the reference, the score is 0.",0.0,0.022140222,0.0013495338,0.0
+"Instructions: 
+Your job is to provide a comprehensive and professional report of negative news articles for a given input_entity. Input_entity can be a person, company, or ship.
+Search thoroughly across all time.
+Provide a date news article you cite.
+
+If there are no negative news articles associates with the input_entity say ""There are no results found for <input_entity>"".
+
+Follow these steps:
+1. If input_entity is a company map it to the legal business name.
+2. Summarize and interpret Google Search results for a given input_entity and all activities provided. If there are no results for a given activity just skip it.
+3. Come up with headline for the event and group results under the headline.
+
+<activities>
+Money Laundering
+Forgery
+Bribery and Corruption
+Human Trafficking
+War Crimes
+Human Rights Violation
+Piracy / Counterfeiting
+Tax Evasion / Tax Fraud
+Antitrust Violations
+Arms Trafficking
+Environmental Crimes
+Pharmaceutical Product Trafficking
+Extortion
+Fraud
+Drug / Narcotics Trafficking
+Organized Crime / Racketeering
+Illicit Trafficking in Stolen and Other Goods
+Falsifying Information on Official Documents
+Robbery / Theft
+Currency Counterfeiting
+Embezzlement
+Terrorism / Terror Financing
+Cybercrime / Hacking / Phishing
+Sanction Violations
+Civil Lawsuit
+Securities Fraud / Insider Trading
+Hostage Taking / Kidnapping
+</activities>
+
+
+Prompt: 
+Find allegations with the following entity:
+<input_entity>
+fujikara cars
+</input_entity>
+","**Price-Fixing Conspiracy Allegations Against Fujikura Ltd.**
+
+Fujikura Ltd., a Tokyo-based manufacturer of automotive wire harnesses, faced allegations of price-fixing in a conspiracy involving auto parts sold to Subaru.  A federal grand jury in Detroit indicted two Fujikura executives—Ryoji Fukudome and Toshihiko Nagashima—for their roles in this conspiracy.  The indictment alleged that, from at least September 2005 to February 2010, the executives and co-conspirators met in Japan to collude on bids and allocate the supply of automotive wire harnesses.  Further communications allegedly monitored and enforced these collusive agreements.
+
+The Department of Justice (DOJ) investigation into anti-competitive conduct in the automotive industry resulted in Fujikura pleading guilty and paying a $20 million criminal fine.  This was part of a broader investigation that led to guilty pleas from three other foreign companies and over $748 million in fines.  The DOJ investigation also prompted a civil lawsuit from Ford Motor Co., alleging a conspiracy to fix prices on electrical systems used in vehicles.  Separately, Fujikura and T.Rad agreed to pay over $14.5 million to settle allegations of price-fixing.
+","**Headline:** Fujikura Ltd. Pleads Guilty to Price-Fixing Conspiracy in Auto Parts Industry
+
+Fujikura Ltd., a Tokyo-based manufacturer of automotive wire harnesses, pleaded guilty to a conspiracy to fix prices of automotive wire harnesses and related products.  The company agreed to pay a $20 million criminal fine, and to cooperate with an ongoing Department of Justice investigation.  The price-fixing allegedly occurred from at least January 2006 to February 2010, involving rigged bids and allocation of wire harness supply.  The conspiracy involved meetings in Japan to reach collusive agreements, and further communications to monitor and enforce these agreements.  Two Fujikura executives, Ryoji Fukudome and Toshihiko Nagashima, were later indicted for their roles in the conspiracy.  The price-fixing affected wire harnesses sold to Fuji Heavy Industries (Subaru) for installation in cars sold in the U.S. and elsewhere.  In a separate settlement, Fujikura agreed to pay $7.14 million to resolve allegations of price-fixing in a class action lawsuit.  This was part of a larger settlement involving multiple auto parts suppliers, with total payments exceeding $14.5 million to resolve allegations of price-fixing.  The DOJ's investigation into anti-competitive conduct in the automotive industry resulted in guilty pleas from three other foreign companies and over $748 million in fines.
+","STEP 1: The reference mentions 'Antitrust Violations'.
+STEP 2: The response mentions the company pleading guilty and paying a fine for a price-fixing conspiracy, which falls under 'Antitrust Violations'. Thus, the response contains all categories from the reference and no additional categories. 
+Score: 1",1.0,0.35264483,0.369148,0.0
+"Instructions: 
+Your job is to provide a comprehensive and professional report of negative news articles for a given input_entity. Input_entity can be a person, company, or ship.
+Search thoroughly across all time.
+Provide a date news article you cite.
+
+If there are no negative news articles associates with the input_entity say ""There are no results found for <input_entity>"".
+
+Follow these steps:
+1. If input_entity is a company map it to the legal business name.
+2. Summarize and interpret Google Search results for a given input_entity and all activities provided. If there are no results for a given activity just skip it.
+3. Come up with headline for the event and group results under the headline.
+
+<activities>
+Money Laundering
+Forgery
+Bribery and Corruption
+Human Trafficking
+War Crimes
+Human Rights Violation
+Piracy / Counterfeiting
+Tax Evasion / Tax Fraud
+Antitrust Violations
+Arms Trafficking
+Environmental Crimes
+Pharmaceutical Product Trafficking
+Extortion
+Fraud
+Drug / Narcotics Trafficking
+Organized Crime / Racketeering
+Illicit Trafficking in Stolen and Other Goods
+Falsifying Information on Official Documents
+Robbery / Theft
+Currency Counterfeiting
+Embezzlement
+Terrorism / Terror Financing
+Cybercrime / Hacking / Phishing
+Sanction Violations
+Civil Lawsuit
+Securities Fraud / Insider Trading
+Hostage Taking / Kidnapping
+</activities>
+
+
+Prompt: 
+Find allegations with the following entity:
+<input_entity>
+Mark Larson
+</input_entity>
+","Mark Larson: Allegations and Convictions
+
+**Lewd Behavior:** In July 2017, Mark Larson was arrested in Wareham, Massachusetts, for allegedly exposing himself to two adult males at public restrooms.  Police reported he was intoxicated at the time.  He was charged with two counts of open and gross lewdness.
+
+**Sexual Assault:**  A police officer, also named Mark Larson, resigned while under investigation for sexual assault.  A subsequent hearing determined that, had the officer remained employed, he would have been dismissed for breaching professional conduct standards related to ""Discreditable Conduct"" following the alleged sexual assault of a female.
+
+**Negligent Homicide and Related Charges:** In 2004, Mark Theodore Larson was convicted of negligent homicide (a felony), driving under the influence, speeding, and failure to wear a seatbelt (misdemeanors).  The conviction was upheld on appeal.
+
+**Open and Gross Lewdness (Massachusetts):** In a separate case, Mark A. Larson was found guilty of two counts of open and gross lewdness following a jury trial in Massachusetts.  This decision was made in January 2023.
+","**Allegations Against Mark Larson**
+
+**Sexual Assault Allegation:**  In March 2024, Mark Larson, a police officer with the Metropolitan Police Service, resigned while under investigation for sexual assault.  A hearing determined that, had he remained in service, he would have been dismissed for breaching professional behavior standards related to """"Discreditable Conduct"""" following a sexual assault of a female.
+
+**Negligent Homicide and Related Charges:** In 2004, Mark Theodore Larson was convicted of negligent homicide (a felony), driving under the influence, speeding, and failure to wear a seatbelt (misdemeanors).  The conviction was upheld on appeal.
+
+**Lewdness Charges:** In January 2023, Mark A. Larson was found guilty of two counts of open and gross lewdness following a jury trial.
+
+**Note:**  This information is current as of December 5th, 2024.  Further information may become available.
+","STEP 1: The AI response has included categories that are not present in the reference, such as 'Lewd Behavior'. Also, some of the categories in the reference are missing from the response.
+STEP 2: According to the rubric, the response should be scored as 0.",0.0,0.6959459,0.539742,0.0

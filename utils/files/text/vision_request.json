@@ -1,0 +1,15 @@
+{
+  "requests": [
+    {
+      "inputConfig": {
+        "gcsSource": {
+          "uri": "gs://lukas-vision-test/sample.pdf"
+        },
+        "mimeType": "application/pdf"
+      },
+      "features": [
+        { "type": "SAFE_SEARCH_DETECTION" }
+      ]
+    }
+  ]
+}

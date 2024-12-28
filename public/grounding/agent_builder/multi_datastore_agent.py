@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from typing import Dict, List, Optional, Tuple
 
 import vertexai
 from google.cloud import aiplatform
@@ -81,6 +82,47 @@ def start_chat_session():
   chat = chat_model.start_chat()
   return chat
 
+def get_enterprise_search_results(
+    response: discoveryengine.SearchResponse,
+) -> List[Dict[str, str | List]]:
+    """
+    Extract Results from Enterprise Search Response
+    """
+
+    count = 0
+    return [
+        {
+            "title": result.document.derived_struct_data["title"],
+            "htmlTitle": result.document.derived_struct_data.get(
+                "htmlTitle", result.document.derived_struct_data["title"]
+            ),
+            "link": result.document.derived_struct_data["link"],
+            # "displayLink": result.document.derived_struct_data["displayLink"],
+            "snippets": [
+                s.get("htmlSnippet", s.get("snippet", ""))
+                for s in result.document.derived_struct_data.get("snippets", [])
+            ],
+            "extractiveAnswers": [
+                e["content"]
+                for e in result.document.derived_struct_data.get(
+                    "extractive_answers", []
+                )
+            ],
+            "extractiveSegments": [
+                e["content"]
+                for e in result.document.derived_struct_data.get(
+                    "extractive_segments", []
+                )
+            ],
+            # "thumbnailImage": get_thumbnail_image(result.document.derived_struct_data),
+            "resultJson": discoveryengine.SearchResponse.SearchResult.to_json(
+                result, including_default_value_fields=True, indent=2
+            ),
+        }
+        for result in response.results
+    ]
+
+
 # Vertex Search Logic
 
 def check_question_llm(user_query):
@@ -131,11 +173,41 @@ def execute_vaiss_query(serving_config, search_query):
           mode=discoveryengine.SearchRequest.SpellCorrectionSpec.Mode.AUTO
       ),
   )
-  response = client.search(request)
+  response_pager = client.search(request)
   # print(response)
 
+  # Parse response
+  response = discoveryengine.SearchResponse(
+    results=response_pager.results,
+    facets=response_pager.facets,
+    total_size=response_pager.total_size,
+    attribution_token=response_pager.attribution_token,
+    next_page_token=response_pager.next_page_token,
+    corrected_query=response_pager.corrected_query,
+    summary=response_pager.summary,
+  )
+
+  results = get_enterprise_search_results(response)
+  summary = getattr(response.summary, "summary_text", "")
+
+
+  output_object_list = []
+  try:
+    for r in range(0,5):
+      output_object = {
+         "Citation": r+1,
+         "Title": results[r]["title"],
+         "Link": results[r]["link"],
+         "Snippet": results[r]["snippets"]
+      }
+      output_object_list.append(output_object)
+  except Exception as e:
+     output_object_list = []
+     print("no results", e)
+     pass
+
   # response_text = f"Summary: {response.summary.summary_text}\nCitations: {response.summary.references}"
-  return response.summary.summary_with_metadata
+  return summary, output_object_list
 
 # Main app logic
 
@@ -175,8 +247,17 @@ if prompt := st.chat_input("How can I help you today?"):
       llm_check_query = json.loads(llm_check_response.candidates[0].content.parts[0].text)
       print(llm_check_query)
       if text_output["question_type"].lower() == "legal":
-        st.markdown(execute_vaiss_query(legal_serving_config, llm_check_query["output"]))
+        summary, response_list = execute_vaiss_query(legal_serving_config, llm_check_query["output"])
+        st.markdown(summary)
+        for r in response_list:
+          st.json(r)
       elif text_output["question_type"].lower() == "risk":
-        st.markdown(execute_vaiss_query(risk_serving_config, llm_check_query["output"]))
+        summary, response_list = execute_vaiss_query(risk_serving_config, llm_check_query["output"])
+        st.markdown(summary)
+        for r in response_list:
+          st.json(r)
       elif text_output["question_type"].lower() == "information security":
-        st.markdown(execute_vaiss_query(infosec_serving_config, llm_check_query["output"]))
+        summary, response_list = execute_vaiss_query(infosec_serving_config, llm_check_query["output"])
+        st.markdown(summary)
+        for r in response_list:
+          st.json(r)

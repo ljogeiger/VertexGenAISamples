@@ -234,9 +234,11 @@ def execute_grounded_gemini_call(
 
     response = client.generate_grounded_content(request)
 
+    print(response)
+
     # Handle the response
     return response
-    # print(response)
+
 
 
 # Define prompt and system instructions

@@ -9,48 +9,48 @@ from typing import List
 PROJECT_ID = "cloud-llm-preview4"  # @param {type:"string"}
 LOCATION = "global"
 
-def generate():
-  vertexai.init(project="cloud-llm-preview4", location="us-central1")
-  tools = [
-      Tool.from_retrieval(
-          retrieval=generative_models.grounding.Retrieval(
-              source=generative_models.grounding.VertexAISearch(datastore="projects/cloud-llm-preview4/locations/global/collections/default_collection/dataStores/pwc-basic_1712090697116"),
-              disable_attribution=False,
-          )
-      ),
-  ]
-  prompt = """
-  INSTRUCTIONS: Use the grounding retrival tool on my datastore. Your job is to search for the following search term: Donald Trump. Return the top 10 results.
+# def generate():
+#   vertexai.init(project="cloud-llm-preview4", location="us-central1")
+#   tools = [
+#       Tool.from_retrieval(
+#           retrieval=generative_models.grounding.Retrieval(
+#               source=generative_models.grounding.VertexAISearch(datastore="projects/cloud-llm-preview4/locations/global/collections/default_collection/dataStores/pwc-basic_1712090697116"),
+#               disable_attribution=False,
+#           )
+#       ),
+#   ]
+#   prompt = """
+#   INSTRUCTIONS: Your job is to search for the following search term: Donald Trump. Return the top 10 results. You are given a Vertex Search datastore with access to search across websites.
 
 
-The output should include the top 10 websites:
-- The retrieval result link
-- Summary of the content of the result
-  """
+# The output should include the top 10 websites:
+# - The retrieval result link
+# - Summary of the content of the result
+#   """
 
-  model = GenerativeModel("gemini-1.5-pro-preview-0409", tools=tools)
-  response = model.generate_content(
-      [prompt],
-      generation_config=generation_config,
-      safety_settings=safety_settings,
-      stream=False,
-  )
+#   model = GenerativeModel("gemini-1.5-pro-001", tools=tools)
+#   response = model.generate_content(
+#       [prompt],
+#       generation_config=generation_config,
+#       safety_settings=safety_settings,
+#       stream=False,
+#   )
 
-  print(response)
-  print(response.text)
+#   print(response)
+#   print(response.text)
 
-generation_config = {
-    "max_output_tokens": 8192,
-    "temperature": 1,
-    "top_p": 0.95,
-}
+# generation_config = {
+#     "max_output_tokens": 8192,
+#     "temperature": 1,
+#     "top_p": 0.95,
+# }
 
-safety_settings = {
-    generative_models.HarmCategory.HARM_CATEGORY_HATE_SPEECH: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    generative_models.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-}
+# safety_settings = {
+#     generative_models.HarmCategory.HARM_CATEGORY_HATE_SPEECH: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+#     generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+#     generative_models.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+#     generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+# }
 
 # generate()
 
