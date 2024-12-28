@@ -7,57 +7,56 @@ The content of this repository is maintained by a Google Cloud Customer Engineer
 ## Repository Structure
 
 The repository is organized into the following main sections:
-
-Directory structure:
-└── ljogeiger-VertexGenAISamples/
-    ├── sample_output/
-    │   ├── test-gwgs_data.csv
-    │   └── custom_search_api_output.txt
-    ├── README
-    ├── public/
-    │   ├── nl2sql/
-    │   │   └── [External]_Text_BisonNLtoBQSQL.ipynb
-    │   ├── open_source/
-    │   │   ├── mistral_chat.py
-    │   │   ├── haiku_call_transcript_summary.py
-    │   │   └── predict_mistral_v0-3.py
-    │   ├── gemini/
-    │   │   ├── gemini_call_transcript_summary.py
-    │   │   └── multimodal_streaming.py
-    │   ├── embeddings/
-    │   │   └── multimodalembedding/
-    │   │       ├── predict_request_gapic.py
-    │   │       └── requirements.txt
-    │   ├── use_cases/
-    │   │   ├── negative_articles/
-    │   │   │   └── gwgs_evaluation_script.py
-    │   │   └── sports/
-    │   │       ├── sport_video_evaluations.ipynb
-    │   │       └── chapterization_gemini_sports.py
-    │   ├── misc/
-    │   │   ├── video_intelligence_api.py
-    │   │   ├── vision_api.py
-    │   │   └── custom_search_api_text.py
-    │   ├── grounding/
-    │   │   ├── google_search/
-    │   │   │   ├── grounding_google_search_keywords.py
-    │   │   │   ├── grounding_with_google_search_keywords_v1.py
-    │   │   │   └── simple_gwgs_gemini_prompt.py
-    │   │   └── agent_builder/
-    │   │       ├── mistral_plus_vaiss.py
-    │   │       ├── grounding_with_vertex_search_and_vertex_search_retrieval.py
-    │   │       ├── collect_params_gemini_plus_vaiss.py
-    │   │       └── multi_datastore_agent.py
-    │   └── mlops/
-    │       └── DeployMistralPipeline.ipynb
-    ├── README.md
-    └── utils/
-        └── files/
-            ├── images/
-            └── text/
-                ├── request.json
-                └── vision_request.json
-
+```
+ljogeiger-VertexGenAISamples/
+├── sample_output/
+│   ├── test-gwgs_data.csv
+│   └── custom_search_api_output.txt
+├── README
+├── public/
+│   ├── nl2sql/
+│   │   └── [External]_Text_BisonNLtoBQSQL.ipynb
+│   ├── open_source/
+│   │   ├── mistral_chat.py
+│   │   ├── haiku_call_transcript_summary.py
+│   │   └── predict_mistral_v0-3.py
+│   ├── gemini/
+│   │   ├── gemini_call_transcript_summary.py
+│   │   └── multimodal_streaming.py
+│   ├── embeddings/
+│   │   └── multimodalembedding/
+│   │       ├── predict_request_gapic.py
+│   │       └── requirements.txt
+│   ├── use_cases/
+│   │   ├── negative_articles/
+│   │   │   └── gwgs_evaluation_script.py
+│   │   └── sports/
+│   │       ├── sport_video_evaluations.ipynb
+│   │       └── chapterization_gemini_sports.py
+│   ├── misc/
+│   │   ├── video_intelligence_api.py
+│   │   ├── vision_api.py
+│   │   └── custom_search_api_text.py
+│   ├── grounding/
+│   │   ├── google_search/
+│   │   │   ├── grounding_google_search_keywords.py
+│   │   │   ├── grounding_with_google_search_keywords_v1.py
+│   │   │   └── simple_gwgs_gemini_prompt.py
+│   │   └── agent_builder/
+│   │       ├── mistral_plus_vaiss.py
+│   │       ├── grounding_with_vertex_search_and_vertex_search_retrieval.py
+│   │       ├── collect_params_gemini_plus_vaiss.py
+│   │       └── multi_datastore_agent.py
+│   └── mlops/
+│       └── DeployMistralPipeline.ipynb
+├── README.md
+└── utils/
+    └── files/
+        ├── images/
+        └── text/
+            ├── request.json
+            └── vision_request.json
+```
 
 ## Getting Started
 
