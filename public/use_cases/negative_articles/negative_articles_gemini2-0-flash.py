@@ -43,6 +43,28 @@ def generate(prompt, system_instructions):
     return response
 
 
+# Adapted from https://github.com/ndebuhr/fishbot/blob/935684458f0cb6cb336d4d412da2eecdbc60e417/src/app.py#L37
+def get_sources(response):
+    """Return a list of sources corresponding with response citations"""
+    metadata = response.candidates[0].grounding_metadata
+    sources = {}
+    source_titles = {}
+    for support in metadata.grounding_supports:
+        for chunk_index in support.grounding_chunk_indices:
+            display_chunk_index = chunk_index + 1  # offset 0 list index
+            if display_chunk_index not in source_titles:
+                source_titles[display_chunk_index] = metadata.grounding_chunks[
+                    chunk_index].web.title
+                sources[display_chunk_index] = metadata.grounding_chunks[
+                    chunk_index].web
+    sorted_source_titles = dict(sorted(source_titles.items()))
+    source_text = ""
+    if sources:
+        for i in sorted_source_titles:
+            source_text += f"\n\n[[{i}] {sorted_source_titles[i]}]({sources[i]})"
+    print(source_text)
+
+
 prompt = """
 Find allegations with the following entity:
 <input_entity>
@@ -101,3 +123,4 @@ for entity in entities:
     print(response.text)
     # Get grounding information (sources, urls, confidence_scores, etc.)
     print(response.candidates[0].grounding_metadata)
+    get_sources(response)
