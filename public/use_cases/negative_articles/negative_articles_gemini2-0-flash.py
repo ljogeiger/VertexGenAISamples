@@ -5,7 +5,7 @@ import json
 
 def generate(prompt, system_instructions):
     client = genai.Client(vertexai=True,
-                          project="cloud-llm-preview1",
+                          project="key-moment-sports",
                           location="us-central1")
 
     model = "gemini-2.0-flash-exp"
@@ -49,9 +49,12 @@ def get_sources(response):
     metadata = response.candidates[0].grounding_metadata
     sources = {}
     source_titles = {}
+    max_chunk_index = -1
     for support in metadata.grounding_supports:
         for chunk_index in support.grounding_chunk_indices:
             display_chunk_index = chunk_index + 1  # offset 0 list index
+            if display_chunk_index > max_chunk_index:
+                max_chunk_index = display_chunk_index
             if display_chunk_index not in source_titles:
                 source_titles[display_chunk_index] = metadata.grounding_chunks[
                     chunk_index].web.title
@@ -63,6 +66,8 @@ def get_sources(response):
         for i in sorted_source_titles:
             source_text += f"\n\n[[{i}] {sorted_source_titles[i]}]({sources[i]})"
     print(source_text)
+    print(f"Max Chunk Index: {max_chunk_index}")
+    print(f"Length of GroundingChunks: {len(metadata.grounding_chunks)}")
 
 
 prompt = """
@@ -124,3 +129,4 @@ for entity in entities:
     # Get grounding information (sources, urls, confidence_scores, etc.)
     print(response.candidates[0].grounding_metadata)
     get_sources(response)
+    print(response)

@@ -15,7 +15,7 @@ model = GenerativeModel(model_name="gemini-1.5-flash-001")
 tool = Tool.from_google_search_retrieval(grounding.GoogleSearchRetrieval())
 
 prompt = """
-What is flashpoint.io's buisness?
+What is the weather today?
 """
 
 safety_settings = {
