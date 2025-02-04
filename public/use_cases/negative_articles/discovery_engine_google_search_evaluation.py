@@ -189,7 +189,7 @@ def plot_bar_plot(eval_results, metrics=None):
 def execute_grounded_gemini_call(
     prompt,
     system_instructions,
-    model="gemini-1.5-flash-002",
+    model="gemini-2.0-exp",
 ):
     # Function to execute the request
 
@@ -238,7 +238,6 @@ def execute_grounded_gemini_call(
 
     # Handle the response
     return response
-
 
 
 # Define prompt and system instructions
@@ -293,6 +292,24 @@ Hostage Taking / Kidnapping
 </activities>
 """
 
+# Get responses from Gemini with GwGS
+entities = ["Seimens", "Lukas Geiger", "fujikara cars", "Mark Larson"]
+
+responses = []
+prompts = []
+references = []
+for entity in entities:
+    response = execute_grounded_gemini_call(
+        prompt=prompt.format(entity=entity),
+        system_instructions=system_instructions,
+        model="gemini-2.0-exp")  # gemini-1.5-flash-002-high-fidelity
+    prompts.append(
+        f"Instructions: {system_instructions}\n\nPrompt: {prompt.format(entity=entity)}"
+    )
+    responses.append(response.candidates[0].content.parts[0].text)
+
+print(f"Gemini GwGS calls complete. Responses: \n{responses}")
+
 # EVALUATIONS
 
 ### Custom Template. Your own definition of custom_text_quality.
@@ -314,82 +331,57 @@ custom_text_quality = PointwiseMetric(
     metric_prompt_template=metric_prompt_template,
 )
 
-# Get responses from Gemini with GwGS
-entities = ["Seimens", "Lukas Geiger", "fujikara cars", "Mark Larson"]
-
-responses = []
-prompts = []
-references = []
-for entity in entities:
-    response = execute_grounded_gemini_call(
-        prompt=prompt.format(entity=entity),
-        system_instructions=system_instructions,
-        model="gemini-1.5-flash-002-high-fidelity")
-    prompts.append(
-        f"Instructions: {system_instructions}\n\nPrompt: {prompt.format(entity=entity)}"
-    )
-    responses.append(response.candidates[0].content.parts[0].text)
-    # For check grounding
-    # d_claims
-    # for claim in response.candidates[0].grounding_metadata.grounding_support:
-    #     claim = {
-    #         ""
-    #     }
-    # references.append()
-
-print(f"Gemini GwGS calls complete. Responses: \n{responses}")
-
-### Pointwise model as a judge evaluation
+## Pointwise model as a judge evaluation
 
 # Setup
 
-# eval_dataset = pd.DataFrame({
-#     "prompt": prompts,
-#     "response": responses,
-# })
+eval_dataset = pd.DataFrame({
+    "prompt": prompts,
+    "response": responses,
+})
 
-# # Run evaluations
-# # For existing prompt template (MetricPromptTemplateExamples) details
-# # go here: https://cloud.google.com/vertex-ai/generative-ai/docs/models/metrics-templates#structure-template
+# Run evaluations
+# For existing prompt template (MetricPromptTemplateExamples) details
+# go here: https://cloud.google.com/vertex-ai/generative-ai/docs/models/metrics-templates#structure-template
 
-# eval_task = EvalTask(
-#     dataset=eval_dataset,
-#     metrics=[
-#         custom_text_quality,
-#         MetricPromptTemplateExamples.Pointwise.FLUENCY,
-#         MetricPromptTemplateExamples.Pointwise.COHERENCE,
-#         MetricPromptTemplateExamples.Pointwise.INSTRUCTION_FOLLOWING,
-#     ],
-#     experiment=EXPERIMENT_NAME)
+eval_task = EvalTask(
+    dataset=eval_dataset,
+    metrics=[
+        custom_text_quality,
+        MetricPromptTemplateExamples.Pointwise.FLUENCY,
+        MetricPromptTemplateExamples.Pointwise.COHERENCE,
+        MetricPromptTemplateExamples.Pointwise.INSTRUCTION_FOLLOWING,
+    ],
+    experiment=EXPERIMENT_NAME)
 
-# eval_result = eval_task.evaluate()
+eval_result = eval_task.evaluate()
 
-# # Display the results
+# Display the results
 
-# display_eval_result(eval_result)
+display_eval_result(eval_result)
 
-# # Save the results to a CSV file
+# Save the results to a CSV file
 
-# save_eval_result(eval_result)
+save_eval_result(eval_result)
 
-# # Create a bar chart with summary results
+# Create a bar chart with summary results
 
-# eval_results = []
-# eval_results.append(
-#     ("GwGS", eval_result.summary_metrics, eval_result.metrics_table))
-# plot_bar_plot(
-#     eval_results,
-#     metrics=[
-#         f"{metric}/mean"
-#         # Edit your list of metrics here if you used other metrics in evaluation.
-#         for metric in [
-#             "custom_text_quality", "fluency", "coherence",
-#             "instruction_following"
-#         ]
-#     ],
-# )
+eval_results = []
+eval_results.append(
+    ("GwGS", eval_result.summary_metrics, eval_result.metrics_table))
+plot_bar_plot(
+    eval_results,
+    metrics=[
+        f"{metric}/mean"
+        # Edit your list of metrics here if you used other metrics in evaluation.
+        for metric in [
+            "custom_text_quality", "fluency", "coherence",
+            "instruction_following"
+        ]
+    ],
+)
 
-### Ground Truth Evaluations
+## Ground Truth Evaluations (Pairwise)
 
 # Identify ground truth
 
@@ -418,7 +410,6 @@ ground_truth = [
 **Other Allegations:**
 
 *   Investigations involved allegations of public corruption, criminal breaches of fiduciary duty (including embezzlement), and violations of the FCPA.  Siemens pleaded guilty in a U.S. federal court to charges of failing to maintain adequate internal controls and failing to comply with the FCPA's books and records provisions.  The company cooperated with investigations.
-
 
 **Note:** This report is current as of December 5th, 2024.  Information may change over time.
 """, """
