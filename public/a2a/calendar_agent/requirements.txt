@@ -1,0 +1,12 @@
+google-api-core==2.24.2
+google-auth==2.38.0
+google-cloud-aiplatform @ git+https://github.com/googleapis/python-aiplatform.git@192a080288f0925afb46bc4f94029c7e6d792088
+google-cloud-core==2.4.3
+google-genai==1.9.0
+googleapis-common-protos==1.69.2
+httpx==0.28.1
+python-dateutil==2.9.0.post0
+requests==2.32.3
+tzlocal==5.3.1
+vertexai==1.43.0
+pytz

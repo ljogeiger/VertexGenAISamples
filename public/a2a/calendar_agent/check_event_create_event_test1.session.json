@@ -1,0 +1,648 @@
+{
+  "id": "6006a5ac-eeb5-4f46-a8ba-c9d5961c9251",
+  "app_name": "calendar_agent",
+  "user_id": "test_user",
+  "state": {
+    "first_name": "Lukas",
+    "last_name": "Geiger",
+    "email": "geiger.ljo@gmail.com",
+    "time_zone": "America/New_York",
+    "double_book": "no",
+    "today": "2025-03-06T15:05:41"
+  },
+  "events": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "create event 1pm tomorrow called test"
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "user",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "gXDXKE5V",
+      "timestamp": 1741291537.721987
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {},
+              "name": "get_user_profile"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "oQOx6H3Z",
+      "timestamp": 1741291539.123456
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "get_user_profile",
+              "response": {
+                "first_name": "Lukas",
+                "last_name": "Geiger",
+                "email": "geiger.ljo@gmail.com",
+                "time_zone": "America/New_York",
+                "double_book": "no"
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {
+          "first_name": "Lukas",
+          "last_name": "Geiger",
+          "email": "geiger.ljo@gmail.com",
+          "time_zone": "America/New_York",
+          "double_book": "no"
+        }
+      },
+      "function_call_event_id": "oQOx6H3Z",
+      "id": "YBmwiQ5A",
+      "timestamp": 1741291539.137093
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Hello Lukas, I am here to help you create calendar events and resolve any conflicts that may arise. To proceed with creating the event \"test\" at 1pm tomorrow, I will transfer you to the single_cal_agent.\n"
+          },
+          {
+            "function_call": {
+              "args": {
+                "agent_name": "single_cal_agent"
+              },
+              "name": "transfer_to_agent"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "QdfmKcPe",
+      "timestamp": 1741291540.45887
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "transfer_to_agent",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {},
+        "transfer_to_agent": "single_cal_agent"
+      },
+      "function_call_event_id": "QdfmKcPe",
+      "id": "RcEo6kF7",
+      "timestamp": 1741291540.468173
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {},
+              "name": "get_today"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "AKtXwqoS",
+      "timestamp": 1741291541.516501
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "get_today",
+              "response": {
+                "result": "2025-03-06T15:05:41"
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {
+          "today": "2025-03-06T15:05:41"
+        }
+      },
+      "function_call_event_id": "AKtXwqoS",
+      "id": "Aroj6r99",
+      "timestamp": 1741291541.52634
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Okay, so today is March 6, 2025. I will create an event for you for 1 PM tomorrow, March 7, 2025. What time zone are you in?\n"
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "5NPwK5W6",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "2xQujkhK",
+      "timestamp": 1741291542.743316
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "EST"
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "user",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "X9qrcYlt",
+      "timestamp": 1741291549.765507
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {
+                "agent_name": "single_cal_agent"
+              },
+              "name": "transfer_to_agent"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "9cf6QRGT",
+      "timestamp": 1741291550.669773
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "transfer_to_agent",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {},
+        "transfer_to_agent": "single_cal_agent"
+      },
+      "function_call_event_id": "9cf6QRGT",
+      "id": "JFlzZvfi",
+      "timestamp": 1741291550.679775
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Okay, I will create an event for you at 1 PM EST tomorrow, March 7, 2025.\n\n"
+          },
+          {
+            "function_call": {
+              "args": {
+                "start_time": "2025-03-07T13:00:00-05:00",
+                "end_time": "2025-03-07T14:00:00-05:00"
+              },
+              "name": "check_cal"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "5vMp9DO5",
+      "timestamp": 1741291552.065729
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "check_cal",
+              "response": {
+                "result": [
+                  {
+                    "kind": "calendar#event",
+                    "etag": "\"3482575360443134\"",
+                    "id": "36pupe1bljfstl2fp2bei9pjv4",
+                    "status": "confirmed",
+                    "htmlLink": "https://www.google.com/calendar/event?eid=MzZwdXBlMWJsamZzdGwyZnAyYmVpOXBqdjQgZ2VpZ2VyLmxqb0Bt",
+                    "created": "2024-12-31T23:56:22.000Z",
+                    "updated": "2025-03-06T19:01:20.221Z",
+                    "summary": "Flight to Liberia (B6 1691)",
+                    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar",
+                    "location": "New York JFK",
+                    "creator": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "organizer": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "start": {
+                      "dateTime": "2025-03-07T09:09:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "end": {
+                      "dateTime": "2025-03-07T14:35:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "transparency": "transparent",
+                    "iCalUID": "36pupe1bljfstl2fp2bei9pjv4@google.com",
+                    "sequence": 0,
+                    "attendees": [
+                      {
+                        "email": "geiger.ljo@gmail.com",
+                        "organizer": true,
+                        "self": true,
+                        "responseStatus": "accepted"
+                      }
+                    ],
+                    "guestsCanInviteOthers": false,
+                    "reminders": {
+                      "useDefault": true
+                    },
+                    "eventType": "fromGmail"
+                  },
+                  {
+                    "kind": "calendar#event",
+                    "etag": "\"3482577183574942\"",
+                    "id": "2eh3gtelmojia7dgbc56n8ld3o",
+                    "status": "confirmed",
+                    "htmlLink": "https://www.google.com/calendar/event?eid=MmVoM2d0ZWxtb2ppYTdkZ2JjNTZuOGxkM28gZ2VpZ2VyLmxqb0Bt",
+                    "created": "2025-03-06T19:16:31.000Z",
+                    "updated": "2025-03-06T19:16:31.787Z",
+                    "summary": "test",
+                    "creator": {
+                      "email": "lukasgeiger-calendar-agent@sandbox-aiml.iam.gserviceaccount.com"
+                    },
+                    "organizer": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "start": {
+                      "dateTime": "2025-03-07T13:00:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "end": {
+                      "dateTime": "2025-03-07T13:30:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "iCalUID": "2eh3gtelmojia7dgbc56n8ld3o@google.com",
+                    "sequence": 0,
+                    "reminders": {
+                      "useDefault": true
+                    },
+                    "eventType": "default"
+                  },
+                  {
+                    "kind": "calendar#event",
+                    "etag": "\"3482579356959678\"",
+                    "id": "jo7r5ft6bimlg0mpcc16h7st1g",
+                    "status": "confirmed",
+                    "htmlLink": "https://www.google.com/calendar/event?eid=am83cjVmdDZiaW1sZzBtcGNjMTZoN3N0MWcgZ2VpZ2VyLmxqb0Bt",
+                    "created": "2025-03-06T19:34:38.000Z",
+                    "updated": "2025-03-06T19:34:38.479Z",
+                    "summary": "test",
+                    "creator": {
+                      "email": "lukasgeiger-calendar-agent@sandbox-aiml.iam.gserviceaccount.com"
+                    },
+                    "organizer": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "start": {
+                      "dateTime": "2025-03-07T13:00:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "end": {
+                      "dateTime": "2025-03-07T13:30:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "iCalUID": "jo7r5ft6bimlg0mpcc16h7st1g@google.com",
+                    "sequence": 0,
+                    "reminders": {
+                      "useDefault": true
+                    },
+                    "eventType": "default"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "function_call_event_id": "5vMp9DO5",
+      "id": "0QLCZZjS",
+      "timestamp": 1741291552.557576
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "It looks like you have two events at 1 PM tomorrow with the title 'test'. Would you like to create another event at 2 PM?\n"
+          },
+          {
+            "function_call": {
+              "args": {
+                "end_time": "2025-03-07T15:00:00-05:00",
+                "start_time": "2025-03-07T14:00:00-05:00"
+              },
+              "name": "check_cal"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "TdC53fw1",
+      "timestamp": 1741291554.108301
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "check_cal",
+              "response": {
+                "result": [
+                  {
+                    "kind": "calendar#event",
+                    "etag": "\"3482575360443134\"",
+                    "id": "36pupe1bljfstl2fp2bei9pjv4",
+                    "status": "confirmed",
+                    "htmlLink": "https://www.google.com/calendar/event?eid=MzZwdXBlMWJsamZzdGwyZnAyYmVpOXBqdjQgZ2VpZ2VyLmxqb0Bt",
+                    "created": "2024-12-31T23:56:22.000Z",
+                    "updated": "2025-03-06T19:01:20.221Z",
+                    "summary": "Flight to Liberia (B6 1691)",
+                    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar",
+                    "location": "New York JFK",
+                    "creator": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "organizer": {
+                      "email": "geiger.ljo@gmail.com",
+                      "self": true
+                    },
+                    "start": {
+                      "dateTime": "2025-03-07T09:09:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "end": {
+                      "dateTime": "2025-03-07T14:35:00-05:00",
+                      "timeZone": "America/New_York"
+                    },
+                    "transparency": "transparent",
+                    "iCalUID": "36pupe1bljfstl2fp2bei9pjv4@google.com",
+                    "sequence": 0,
+                    "attendees": [
+                      {
+                        "email": "geiger.ljo@gmail.com",
+                        "organizer": true,
+                        "self": true,
+                        "responseStatus": "accepted"
+                      }
+                    ],
+                    "guestsCanInviteOthers": false,
+                    "reminders": {
+                      "useDefault": true
+                    },
+                    "eventType": "fromGmail"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "function_call_event_id": "TdC53fw1",
+      "id": "J5j7BqwM",
+      "timestamp": 1741291554.51225
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Yes, the time at 2 PM EST tomorrow, March 7th is available. Would you like me to create an event titled 'test' at that time?\n"
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "YWnUtUfJ",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "o3eA69vD",
+      "timestamp": 1741291555.563584
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "yes"
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "user",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "tcDDF3GM",
+      "timestamp": 1741291570.621034
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {
+                "agent_name": "single_cal_agent"
+              },
+              "name": "transfer_to_agent"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "ZyptbwjG",
+      "timestamp": 1741291571.757089
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "transfer_to_agent",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {},
+        "transfer_to_agent": "single_cal_agent"
+      },
+      "function_call_event_id": "ZyptbwjG",
+      "id": "qnT92UvB",
+      "timestamp": 1741291571.760741
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {
+                "start_time": "2025-03-07T14:00:00-05:00",
+                "end_time": "2025-03-07T15:00:00-05:00",
+                "title": "test"
+              },
+              "name": "create_calendar_event"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "Rl1S51ef",
+      "timestamp": 1741291573.01092
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "create_calendar_event",
+              "response": {
+                "result": true
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "function_call_event_id": "Rl1S51ef",
+      "id": "4wgC5jVF",
+      "timestamp": 1741291573.710731
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "OK. I've created an event called test for you tomorrow, March 7th, from 2 PM to 3 PM EST.\n"
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "P1oUjKIa",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "PBr7scUi",
+      "timestamp": 1741291574.9203
+    }
+  ],
+  "last_update_time": 1741291574.9203
+}

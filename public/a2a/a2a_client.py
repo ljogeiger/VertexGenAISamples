@@ -1,4 +1,4 @@
-import logging
+import logging, subprocess
 
 from typing import Any
 from uuid import uuid4
@@ -13,6 +13,13 @@ from a2a.types import (
     SendStreamingMessageRequest,
 )
 
+import google.auth.transport.requests
+
+def getToken():
+  creds, _ = google.auth.default()
+  auth_req = google.auth.transport.requests.Request()
+  creds.refresh(auth_req)
+  return creds.token
 
 async def main() -> None:
     PUBLIC_AGENT_CARD_PATH = '/.well-known/agent.json'
@@ -23,10 +30,19 @@ async def main() -> None:
     logger = logging.getLogger(__name__)  # Get a logger instance
 
     # --8<-- [start:A2ACardResolver]
+    # base_url = 'http://localhost:9998'
+    base_url = 'https://sample-a2a-agent-305610648548.us-central1.run.app'
 
-    base_url = 'http://localhost:9999'
 
-    async with httpx.AsyncClient() as httpx_client:
+    # Configure longer timeouts for complex agent operations
+    timeout_config = httpx.Timeout(
+        connect=30.0,  # Connection timeout
+        read=300.0,    # Read timeout (5 minutes for complex operations)
+        write=30.0,    # Write timeout
+        pool=30.0      # Pool timeout
+    )
+    
+    async with httpx.AsyncClient(timeout=timeout_config) as httpx_client:
         # Initialize A2ACardResolver
         resolver = A2ACardResolver(
             httpx_client=httpx_client,
@@ -42,6 +58,7 @@ async def main() -> None:
             logger.info(
                 f'Attempting to fetch public agent card from: {base_url}{PUBLIC_AGENT_CARD_PATH}'
             )
+            
             _public_card = (
                 await resolver.get_agent_card()
             )  # Fetches from default public path
@@ -60,7 +77,7 @@ async def main() -> None:
                         f'\nPublic card supports authenticated extended card. Attempting to fetch from: {base_url}{EXTENDED_AGENT_CARD_PATH}'
                     )
                     auth_headers_dict = {
-                        'Authorization': 'Bearer dummy-token-for-extended-card'
+                        'Authorization': 'Bearer dummy-token-for-extended-card'  # Add your token here
                     }
                     _extended_card = await resolver.get_agent_card(
                         relative_card_path=EXTENDED_AGENT_CARD_PATH,
@@ -110,7 +127,7 @@ async def main() -> None:
             'message': {
                 'role': 'user',
                 'parts': [
-                    {'kind': 'text', 'text': 'Hi!'}
+                    {'kind': 'text', 'text': 'Hello, please schedule an event for tomorrow at 10-10:30am called test for me. '}
                 ],
                 'messageId': uuid4().hex,
             },
@@ -119,20 +136,49 @@ async def main() -> None:
             id=str(uuid4()), params=MessageSendParams(**send_message_payload)
         )
 
-        response = await client.send_message(request)
-        print(response.model_dump(mode='json', exclude_none=True))
+        logger.info("Sending message request...")
+        logger.info(f"Request payload: {send_message_payload}")
+        
+        try:
+            response = await client.send_message(request)
+            logger.info("Successfully received response")
+            print(response.model_dump(mode='json', exclude_none=True))
+        except Exception as e:
+            logger.error(f"Error sending message: {e}", exc_info=True)
+            raise
         # --8<-- [end:send_message]
+
+        task_id = response.root.result.id
+        context_id = response.root.result.contextId
+
+        send_message_payload_2: dict[str, Any] = {
+            'message': {
+                'role': 'user',
+                'parts': [
+                    {'kind': 'text', 'text': 'yes'}
+                    ],
+                'messageId': uuid4().hex,
+                # 'taskId': task_id,
+                'contextId': context_id,
+            },
+        }
+
+        request_2 = SendMessageRequest(
+            id=str(uuid4()), params=MessageSendParams(**send_message_payload_2)
+        )
+        response_2 = await client.send_message(request_2)
+        print(response_2.model_dump(mode='json', exclude_none=True))
 
         # --8<-- [start:send_message_streaming]
 
-        streaming_request = SendStreamingMessageRequest(
-            id=str(uuid4()), params=MessageSendParams(**send_message_payload)
-        )
+        # streaming_request = SendStreamingMessageRequest(
+        #     id=str(uuid4()), params=MessageSendParams(**send_message_payload)
+        # )
 
-        stream_response = client.send_message_streaming(streaming_request)
+        # stream_response = client.send_message_streaming(streaming_request)
 
-        async for chunk in stream_response:
-            print(chunk.model_dump(mode='json', exclude_none=True))
+        # async for chunk in stream_response:
+        #     print(chunk.model_dump(mode='json', exclude_none=True))
         # --8<-- [end:send_message_streaming]
 
 

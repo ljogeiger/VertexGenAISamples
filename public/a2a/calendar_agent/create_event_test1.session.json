@@ -1,0 +1,367 @@
+{
+  "id": "9360f2dc-b0b8-4ee3-bb0d-b3fa9f0f4f42",
+  "app_name": "calendar_agent",
+  "user_id": "test_user",
+  "state": {
+    "first_name": "Lukas",
+    "last_name": "Geiger",
+    "email": "geiger.ljo@gmail.com",
+    "time_zone": "America/New_York",
+    "double_book": "no",
+    "today": "2025-03-06T13:59:42"
+  },
+  "events": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "hi create event tomorrow 1pm called test"
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "user",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "X7x40eUx",
+      "timestamp": 1741287579.044801
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {},
+              "name": "get_user_profile"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "yK5GR8yF",
+      "timestamp": 1741287580.242311
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "get_user_profile",
+              "response": {
+                "first_name": "Lukas",
+                "last_name": "Geiger",
+                "email": "geiger.ljo@gmail.com",
+                "time_zone": "America/New_York",
+                "double_book": "no"
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {
+          "first_name": "Lukas",
+          "last_name": "Geiger",
+          "email": "geiger.ljo@gmail.com",
+          "time_zone": "America/New_York",
+          "double_book": "no"
+        }
+      },
+      "function_call_event_id": "yK5GR8yF",
+      "id": "zFU03M19",
+      "timestamp": 1741287580.246605
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Hello Lukas! I am here to help you create calendar events and resolve any scheduling conflicts. To proceed with creating the event \"test\" tomorrow at 1pm, I will transfer you to the appropriate agent.\n"
+          },
+          {
+            "function_call": {
+              "args": {
+                "agent_name": "single_cal_agent"
+              },
+              "name": "transfer_to_agent"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "SArAURrW",
+      "timestamp": 1741287581.604619
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "transfer_to_agent",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {},
+        "transfer_to_agent": "single_cal_agent"
+      },
+      "function_call_event_id": "SArAURrW",
+      "id": "FtTY2irZ",
+      "timestamp": 1741287581.617959
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {},
+              "name": "get_today"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "uK1I14Mo",
+      "timestamp": 1741287582.391358
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "get_today",
+              "response": {
+                "result": "2025-03-06T13:59:42"
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {
+          "today": "2025-03-06T13:59:42"
+        }
+      },
+      "function_call_event_id": "uK1I14Mo",
+      "id": "9tOITIG0",
+      "timestamp": 1741287582.401314
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "OK. today is 2025-03-06. So tomorrow will be 2025-03-07.\n"
+          },
+          {
+            "function_call": {
+              "args": {
+                "start_time": "2025-03-07T13:00:00",
+                "end_time": "2025-03-07T13:30:00"
+              },
+              "name": "check_cal"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "zPimXCjA",
+      "timestamp": 1741287583.688097
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "check_cal",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "function_call_event_id": "zPimXCjA",
+      "id": "pefH2PyY",
+      "timestamp": 1741287583.976121
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "It seems like that time is available. would you like me to create an event called test for tomorrow, 2025-03-07, at 1pm?\n"
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "HITRqf9A",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "Bnwmrvzv",
+      "timestamp": 1741287585.121613
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "yes"
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "user",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "uYor3GsZ",
+      "timestamp": 1741287592.039097
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {
+                "agent_name": "single_cal_agent"
+              },
+              "name": "transfer_to_agent"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "jcNhT1nc",
+      "timestamp": 1741287593.146494
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "transfer_to_agent",
+              "response": {}
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "root_agent",
+      "actions": {
+        "state_delta": {},
+        "transfer_to_agent": "single_cal_agent"
+      },
+      "function_call_event_id": "jcNhT1nc",
+      "id": "X7ydR9wx",
+      "timestamp": 1741287593.152825
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_call": {
+              "args": {
+                "end_time": "2025-03-07T13:30:00",
+                "title": "test",
+                "start_time": "2025-03-07T13:00:00"
+              },
+              "name": "create_event"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "ZQAMR88a",
+      "timestamp": 1741287594.376513
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "function_response": {
+              "name": "create_event",
+              "response": {
+                "result": true
+              }
+            }
+          }
+        ],
+        "role": "user"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "function_call_event_id": "ZQAMR88a",
+      "id": "QxykDX96",
+      "timestamp": 1741287595.114885
+    },
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "OK. I've created an event called test for tomorrow, 2025-03-07, at 1pm.\n"
+          }
+        ],
+        "role": "model"
+      },
+      "invocation_id": "1rq3vWLB",
+      "author": "single_cal_agent",
+      "actions": {
+        "state_delta": {}
+      },
+      "id": "QBclDQk8",
+      "timestamp": 1741287596.117557
+    }
+  ],
+  "last_update_time": 1741287596.117557
+}
