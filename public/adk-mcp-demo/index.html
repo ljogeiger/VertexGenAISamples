@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ADK SSE Demo</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; background: #0f172a; color: #f8fafc; }
+        .chat-container { border: 1px solid #334155; border-radius: 8px; padding: 1rem; height: 500px; overflow-y: auto; background: #1e293b; margin-bottom: 1rem; }
+        .message { margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 4px; }
+        .user { background: #3b82f6; padding: 10px; }
+        .agent { background: #475569; padding: 10px; }
+        .tool-progress { color: #10b981; font-family: monospace; font-size: 0.9em; margin-left: 1rem; }
+        input, button { padding: 0.5rem; font-size: 1rem; border: none; border-radius: 4px; }
+        input { flex-grow: 1; margin-right: 0.5rem; background: #334155; color: white; }
+        button { background: #3b82f6; color: white; cursor: pointer; }
+        .input-area { display: flex; }
+    </style>
+</head>
+<body>
+    <h1>ADK Agent Streaming Demo</h1>
+    <p>This frontend proves that intermediate `state_delta` updates containing MCP progress logs are successfully streaming from ADK! 🚀</p>
+    
+    <div class="chat-container" id="chat"></div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Ask to process data..." value="Test the process_data tool on 'test'">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div style="margin-top: 1rem; font-size: 0.8em; color: #94a3b8;">
+        <strong>Raw Event Stream:</strong>
+        <pre id="rawLog" style="background: #000; padding: 10px; height: 100px; overflow: auto; border: 1px solid #334155;"></pre>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const rawLog = document.getElementById('rawLog');
+        let currentEventSource = null;
+
+        function appendMessage(text, className) {
+            const div = document.createElement('div');
+            div.className = `message ${className}`;
+            div.innerHTML = `<strong>${className.toUpperCase()}</strong><br>${text}`;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function appendProgress(text) {
+            const div = document.createElement('div');
+            div.className = `message tool-progress`;
+            div.textContent = text;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value;
+            if (!message) return;
+            
+            appendMessage(message, 'user');
+            rawLog.textContent = "";
+
+            if (currentEventSource) {
+                currentEventSource.close();
+            }
+
+            const url = `/chat?message=${encodeURIComponent(message)}`;
+            currentEventSource = new EventSource(url);
+
+            currentEventSource.onmessage = function(event) {
+                try {
+                    rawLog.textContent += event.data.substring(0, 200) + "...\n";
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.error) {
+                        appendMessage(`❌ ERROR: ${data.error}`, 'agent');
+                        currentEventSource.close();
+                        return;
+                    }
+                    
+                    // 1. Text Output Events
+                    if (data.content && data.content.parts) {
+                        data.content.parts.forEach(part => {
+                            if (part.text) appendMessage(part.text, 'agent');
+                        });
+                    }
+                    
+                    // 2. State Delta Events (Aliased to camelCase stateDelta)
+                    if (data.actions && data.actions.stateDelta) {
+                        const stateDelta = data.actions.stateDelta;
+                        
+                        // 'tool_update' is the key we set in agent.py
+                        if (stateDelta.tool_update) {
+                            const prog = stateDelta.tool_update;
+                            if (prog.message) {
+                                appendProgress(`⚙️ PROGRESS: ${prog.message} (${Math.round(prog.progress * 100)}%)`);
+                            }
+                        }
+                    }
+                    
+                    // 3. Turn Complete
+                    if (data.turnComplete) {
+                        appendProgress("🏁 Turn complete.");
+                        currentEventSource.close();
+                    }
+                } catch (err) {
+                    console.error("Error parsing ADK event: ", err);
+                }
+            };
+
+            currentEventSource.onerror = function() {
+                console.log("EventSource connection closed visually.");
+                currentEventSource.close();
+            };
+        }
+    </script>
+</body>
+</html>
