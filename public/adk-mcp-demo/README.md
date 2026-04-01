@@ -19,10 +19,25 @@ We updated `mcp_server.py` to use the **Streamable HTTP** transport (2025-06-18 
 - **ProgressCallback**: We implemented a `progress_callback` factory. When the MCP server reports progress, this callback is triggered.
 - **Manual Event Enqueuing**: Inside the callback, we manually create an `Event` with the progress data and call `invocation_context.enqueue_event(event, partial=True)`. This pushes a "partial" update into the agent's event stream immediately, without waiting for the tool to finish.
 
-### 3. The Custom Plumbing (`custom_frontend.py`)
-The ADK 2.0 Alpha `Runner` doesn't automatically initialize the `event_queue` on the `InvocationContext` for manual `enqueue_event()` calls. We solved this with:
-- **ProgressProxyPlugin**: A custom `BasePlugin` that intercepts the invocation start and injects a shared `asyncio.Queue` into the context.
-- **Merged Generator**: The FastAPI backend concurrently consumes from both the natural `Runner.run_async()` generator and the manual `mcp_progress_queue`, merging them into a single SSE (Server-Sent Events) stream.
+### 3. The Custom Plumbing (`custom_backend.py`)
+
+**Why `custom_backend.py`?**
+The standard ADK 2.0 Dev UI (and typical `runner.run_async()` abstraction) filters out partial real-time events (like `stateDelta`) to keep the primary trace clean and high-level. To stream granular, real-time progress chunks to a browser, we needed a custom backend using FastAPI that exposes a raw SSE (Server-Sent Events) endpoint (`/chat`).
+
+**Why the Custom Event Generator? ("Out-of-Band" Streaming)**
+The ADK 2.0 Alpha `Runner` naturally sequences events as the internal agent graph executes—it waits for a node (like a tool) to finish before yielding its output. However, our manual `enqueue_event(..., partial=True)` calls push events *out-of-band*. "Out-of-band" means these events are injected directly into the active event queue from a separate process (the tool's progress callback) while the main thread is still physically blocked waiting for the tool to complete its overall execution. 
+
+To ensure these out-of-band events immediately stream back to the UI concurrently while the tool is still running, we implemented a dual-queue architecture:
+- **ProgressProxyPlugin**: A custom `BasePlugin` that intercepts the invocation start and injects a shared `asyncio.Queue` into the context, allowing the tool to emit events seamlessly.
+- **Merged Generator (`event_generator()`)**: The FastAPI backend spins up two background tasks—one consuming natural events from `Runner.run_async()`, and one consuming manual tool events from the plugin's queue. It merges both queues into a single SSE stream. This guarantees that manual progress chunks aren't blocked by the tool's execution thread and are flushed sequentially with natural LLM chunks.
+
+### Deployment to Vertex AI Agent Engine
+If you were to deploy this ADK 2.0 agent to a managed cloud runtime like **Vertex AI Agent Engine**, you **would not** need to deploy this `custom_backend.py`. 
+
+Here is how it works in the cloud:
+1. **Managed Runner**: Agent Engine natively wraps your `root_agent` in its own highly-optimized, distributed `Runner`. It natively manages the `InvocationContext` and its associated `event_queue`.
+2. **Native Bubbling**: Because we use the standard `invocation_context.enqueue_event(..., partial=True)` method inside `my_agent/agent.py`, Agent Engine's native runner will automatically pick up these out-of-band partial events and push them into the cloud streaming response.
+3. **Client SDK Consumption**: On the client side (e.g., your frontend application using the Vertex AI SDK), you would call the Agent Engine's stream endpoint (e.g., `stream_query`). You would receive the exact same stream of ADK `Event` objects, and your frontend UI would extract the `stateDelta` just like `index.html` does here.
 
 ### 4. The Custom UI (`index.html`)
 A vanilla JS frontend that:
@@ -40,9 +55,9 @@ A vanilla JS frontend that:
 ```
 (Running on port 8003 by default)
 
-### 2. Start the Custom Frontend
+### 2. Start the Custom Backend
 ```bash
-/Users/lukasgeiger/Desktop/VertexGenAISamples/adk2.0-alpha/bin/python custom_frontend.py
+python custom_backend.py
 ```
 (Running on port 8002)
 

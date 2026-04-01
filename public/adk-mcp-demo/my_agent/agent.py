@@ -1,5 +1,6 @@
 from google.adk.events.event import Event
 from google.adk.agents import LlmAgent
+from google.adk import Workflow
 from google.adk.tools.mcp_tool import McpToolset, StreamableHTTPConnectionParams
 
 # Define a factory that receives the ADK tool_context whenever a tool is called.
@@ -31,10 +32,18 @@ toolset = McpToolset(
     progress_callback=get_progress_callback
 )
 
-# Initialize the Gemini agent, equipped with our orchestrating toolset
-root_agent = LlmAgent(
-    model="gemini-2.0-flash",
-    name="my_agent",
+# Define the LlmAgent as a sub-agent instead of the root
+sub_agent = LlmAgent(
+    model="gemini-2.5-flash",
+    name="my_sub_agent",
     tools=[toolset],
     description="I am a specialized agent that connects to remote tools and streams their progress live."
+)
+
+# Define the root workflow that delegates to the sub_agent
+root_agent = Workflow(
+    name="parent_workflow",
+    edges=[
+        ("START", sub_agent),
+    ]
 )
