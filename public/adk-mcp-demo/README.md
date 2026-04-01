@@ -31,14 +31,6 @@ To ensure these out-of-band events immediately stream back to the UI concurrentl
 - **ProgressProxyPlugin**: A custom `BasePlugin` that intercepts the invocation start and injects a shared `asyncio.Queue` into the context, allowing the tool to emit events seamlessly.
 - **Merged Generator (`event_generator()`)**: The FastAPI backend spins up two background tasks—one consuming natural events from `Runner.run_async()`, and one consuming manual tool events from the plugin's queue. It merges both queues into a single SSE stream. This guarantees that manual progress chunks aren't blocked by the tool's execution thread and are flushed sequentially with natural LLM chunks.
 
-### Deployment to Vertex AI Agent Engine
-If you were to deploy this ADK 2.0 agent to a managed cloud runtime like **Vertex AI Agent Engine**, you **would not** need to deploy this `custom_backend.py`. 
-
-Here is how it works in the cloud:
-1. **Managed Runner**: Agent Engine natively wraps your `root_agent` in its own highly-optimized, distributed `Runner`. It natively manages the `InvocationContext` and its associated `event_queue`.
-2. **Native Bubbling**: Because we use the standard `invocation_context.enqueue_event(..., partial=True)` method inside `my_agent/agent.py`, Agent Engine's native runner will automatically pick up these out-of-band partial events and push them into the cloud streaming response.
-3. **Client SDK Consumption**: On the client side (e.g., your frontend application using the Vertex AI SDK), you would call the Agent Engine's stream endpoint (e.g., `stream_query`). You would receive the exact same stream of ADK `Event` objects, and your frontend UI would extract the `stateDelta` just like `index.html` does here.
-
 ### 4. The Custom UI (`index.html`)
 A vanilla JS frontend that:
 - Connects to the `/chat` SSE endpoint.
