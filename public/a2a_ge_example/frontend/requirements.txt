@@ -1,0 +1,5 @@
+flask==3.0.3
+requests==2.32.3
+a2a-sdk==0.2.12
+httpx==0.28.1
+gunicorn==22.0.0
